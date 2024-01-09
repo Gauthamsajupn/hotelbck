@@ -11,6 +11,7 @@ const usersRouter=require('./routes/usersRouter')
 const AdminRouter=require('./routes/adminRouter')
 const bookingsRouter=require('./routes/bookingsRouter')
 const typeRouter=require('./routes/typeRouter')
+const bookingdetailsRouter=require('./routes/bookingdetailsRouter')
 
 app.use(cors());
 app.use(express.json())
@@ -20,6 +21,7 @@ app.use('/api/rooms', roomRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/admin', AdminRouter )
 app.use('/api/bookings',bookingsRouter )
+app.use('/api/bookingdetails',bookingdetailsRouter)
 
 app.listen(3005,()=>
 

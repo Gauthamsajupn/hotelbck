@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Booking = require("../model/booking");
 const Room = require("../model/room");
+const BookingDetails = require('../model/bookingdetails');
 const stripe = require('stripe')(
     'sk_test_51OJAnCSFlsOEfvLRiG9jORBj30G1WAx420We6VyGO9iiNNYVYnYQFORschUCm9aYbo5xI0SENykt4rr0oGXwW53C00B0yyIkLC');
 const { v4: uuidv4 } = require('uuid');
@@ -50,15 +51,15 @@ router.post("/bookroom", async (req, res) => {
                 await roomtemp.save();
                 
                 // Decrement the count for the booked room
-                const updatedRoom = await Room.findByIdAndUpdate(
-                    room._id,
-                    { $inc: { count: -1 } },
-                    { new: true }
-                );
+                // const updatedRoom = await Room.findByIdAndUpdate(
+                //     room._id,
+                //     { $inc: { count: -1 } },
+                //     { new: true }
+                // );
 
-                if (!updatedRoom) {
-                    return res.status(404).json({ success: false, message: "Room not found" });
-                }
+                // if (!updatedRoom) {
+                //     return res.status(404).json({ success: false, message: "Room not found" });
+                // }
 
                 res.status(200).send("Room Booked Successfully");
             } catch (error) {
@@ -116,19 +117,19 @@ router.post("/cancelbooking", async (req, res) => {
 
             await room.save();
 
-            // Increment the count for the canceled room
-            const updatedRoom = await Room.findByIdAndUpdate(
-                roomid,
-                { $inc: { count: 1 } },
-                { new: true }
-            );
+            // // Increment the count for the canceled room
+            // const updatedRoom = await Room.findByIdAndUpdate(
+            //     roomid,
+            //     { $inc: { count: 1 } },
+            //     { new: true }
+            // );
 
-            if (!updatedRoom) {
-                return res.status(404).json({
-                    success: false,
-                    message: "Room not found",
-                });
-            }
+            // if (!updatedRoom) {
+            //     return res.status(404).json({
+            //         success: false,
+            //         message: "Room not found",
+            //     });
+            // }
 
             res.send("Your Booking Cancelled Successfully, and room count updated.");
         } else {
@@ -140,6 +141,11 @@ router.post("/cancelbooking", async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+
+
+
+
 
 router.get("/getallbookings",async(req,res)=>
     {

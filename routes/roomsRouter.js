@@ -117,4 +117,23 @@ router.put('/handledeactivate/:roomId', async (req, res) => {
   }
 });
 
+
+router.get('/getroomcount/:roomId', async (req, res) => {
+  try {
+    const roomId = req.params.roomId;
+
+    // Fetch the room by ID from the database
+    const room = await Room.findById(roomId);
+
+    if (!room) {
+      return res.status(404).json({ error: 'Room not found' });
+    }
+
+    // Send the count of the room
+    res.json({ count: room.count });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 module.exports = router;
